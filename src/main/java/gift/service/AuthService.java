@@ -7,6 +7,7 @@ import gift.model.dto.MemberRequestDto;
 import gift.repository.MemberDao;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
@@ -56,14 +57,13 @@ public class AuthService {
     private boolean validateToken(String token) {
         try {
             Claims payload = getClaims(token);
-            Member member = memberDao.selectMemberById(Long.parseLong(payload.getSubject()));
             return true;
-        } catch (Exception e) {
+        } catch (JwtException e) {
             return false;
         }
     }
 
-    public Claims getClaims(String token) {
+    public Claims getClaims(String token) throws JwtException {
         Jws<Claims> jws = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
             .build()
             .parseSignedClaims(token);
