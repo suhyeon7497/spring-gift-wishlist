@@ -26,5 +26,5 @@ DROP TABLE wishes IF EXISTS;
 CREATE TABLE wishes(
                 product_name VARCHAR(255),
                 count VARCHAR(255),
-                member_id INT
+                member_id BIGINT
             );
