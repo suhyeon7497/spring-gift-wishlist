@@ -44,7 +44,7 @@ public class WishController {
         @LoginMember LoginMemberDto loginMemberDto) {
         Wish wish = wishRequestDto.toEntity();
         wish.setMemberId(loginMemberDto.getId());
-        if(wish.getCount() == 0){
+        if (wish.getCount() == 0) {
             wishDao.deleteWish(wish);
             return;
         }
