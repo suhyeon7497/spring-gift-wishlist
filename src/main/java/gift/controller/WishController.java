@@ -25,11 +25,10 @@ public class WishController {
 
     @GetMapping("/wishes")
     public List<WishResponseDto> getWishList(@LoginMember LoginMemberDto loginMemberDto) {
-        List<WishResponseDto> wishlist = wishDao.selectAllWishesByMemberId(loginMemberDto.getId())
+        return wishDao.selectAllWishesByMemberId(loginMemberDto.getId())
             .stream()
             .map(WishResponseDto::from)
             .toList();
-        return wishlist;
     }
 
     @PostMapping("/wishes")
