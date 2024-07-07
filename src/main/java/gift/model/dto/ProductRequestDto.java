@@ -1,5 +1,6 @@
 package gift.model.dto;
 
+import gift.exception.ProductErrorCode;
 import gift.exception.ProductException;
 import gift.model.Product;
 import jakarta.validation.constraints.Min;
@@ -63,6 +64,7 @@ public class ProductRequestDto {
     }
 
     public Product toEntity() throws ProductException {
+        validateKakaoWord(name);
         return new Product(
             id,
             name,
@@ -78,5 +80,11 @@ public class ProductRequestDto {
             product.getPrice(),
             product.getImageUrl()
         );
+    }
+
+    private void validateKakaoWord(String name) throws ProductException {
+        if (name.contains("카카오")) {
+            throw new ProductException(ProductErrorCode.HAS_KAKAO_WORD);
+        }
     }
 }
