@@ -1,12 +1,10 @@
 package gift.controller;
 
-import gift.model.dto.TokenResponseDto;
 import gift.model.dto.MemberRequestDto;
+import gift.model.dto.TokenResponseDto;
 import gift.repository.MemberDao;
 import gift.service.AuthService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,19 +23,17 @@ public class MemberController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<TokenResponseDto> register(
+    public TokenResponseDto register(
         @Valid @RequestBody MemberRequestDto memberRequestDto) {
         memberDao.insertMember(memberRequestDto.toEntity());
-        TokenResponseDto tokenResponseDto = new TokenResponseDto(
+        return new TokenResponseDto(
             authService.getToken(memberRequestDto));
-        return ResponseEntity.status(HttpStatus.OK).body(tokenResponseDto);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponseDto> login(
+    public TokenResponseDto login(
         @Valid @RequestBody MemberRequestDto memberRequestDto) {
-        TokenResponseDto tokenResponseDto = new TokenResponseDto(
+        return new TokenResponseDto(
             authService.getToken(memberRequestDto));
-        return ResponseEntity.status(HttpStatus.OK).body(tokenResponseDto);
     }
 }
