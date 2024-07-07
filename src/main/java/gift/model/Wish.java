@@ -2,7 +2,7 @@ package gift.model;
 
 public class Wish {
 
-    private Long userId;
+    private Long memberId;
     private String productName;
     private Integer count;
 
@@ -11,14 +11,14 @@ public class Wish {
         this.count = count;
     }
 
-    public Wish(Long userId, String productName, Integer count) {
-        this.userId = userId;
+    public Wish(Long memberId, String productName, Integer count) {
+        this.memberId = memberId;
         this.productName = productName;
         this.count = count;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getMemberId() {
+        return memberId;
     }
 
     public String getProductName() {
@@ -29,7 +29,7 @@ public class Wish {
         return count;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 }

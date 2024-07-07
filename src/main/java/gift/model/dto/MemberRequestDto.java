@@ -1,10 +1,10 @@
 package gift.model.dto;
 
-import gift.model.User;
+import gift.model.Member;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public class UserRequestDto {
+public class MemberRequestDto {
 
     @Email
     private String email;
@@ -16,10 +16,10 @@ public class UserRequestDto {
 
     private String role;
 
-    public UserRequestDto() {
+    public MemberRequestDto() {
     }
 
-    public UserRequestDto(String email, String password, String name, String role) {
+    public MemberRequestDto(String email, String password, String name, String role) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -58,8 +58,8 @@ public class UserRequestDto {
         this.role = role;
     }
 
-    public User toEntity() {
-        return new User(
+    public Member toEntity() {
+        return new Member(
             email,
             password,
             name,

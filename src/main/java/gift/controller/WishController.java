@@ -1,11 +1,11 @@
 package gift.controller;
 
 import gift.model.Wish;
-import gift.model.dto.LoginUserDto;
+import gift.model.dto.LoginMemberDto;
 import gift.model.dto.WishRequestDto;
 import gift.model.dto.WishResponseDto;
 import gift.repository.WishDao;
-import gift.resolver.annotation.LoginUser;
+import gift.resolver.annotation.LoginMember;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +24,8 @@ public class WishController {
     }
 
     @GetMapping("/wishes")
-    public List<WishResponseDto> getWishList(@LoginUser LoginUserDto loginUserDto) {
-        List<WishResponseDto> wishlist = wishDao.selectAllWishesByUserId(loginUserDto.getId())
+    public List<WishResponseDto> getWishList(@LoginMember LoginMemberDto loginMemberDto) {
+        List<WishResponseDto> wishlist = wishDao.selectAllWishesByMemberId(loginMemberDto.getId())
             .stream()
             .map(WishResponseDto::from)
             .toList();
@@ -34,17 +34,17 @@ public class WishController {
 
     @PostMapping("/wishes")
     public void addProductToWishList(@RequestBody WishRequestDto wishRequestDto,
-        @LoginUser LoginUserDto loginUserDto) {
+        @LoginMember LoginMemberDto loginMemberDto) {
         Wish wish = wishRequestDto.toEntity();
-        wish.setUserId(loginUserDto.getId());
+        wish.setMemberId(loginMemberDto.getId());
         wishDao.insertWish(wish);
     }
 
     @PutMapping("/wishes")
     public void updateProductInWishList(@RequestBody WishRequestDto wishRequestDto,
-        @LoginUser LoginUserDto loginUserDto) {
+        @LoginMember LoginMemberDto loginMemberDto) {
         Wish wish = wishRequestDto.toEntity();
-        wish.setUserId(loginUserDto.getId());
+        wish.setMemberId(loginMemberDto.getId());
         if(wish.getCount() == 0){
             wishDao.deleteWish(wish);
             return;
@@ -55,9 +55,9 @@ public class WishController {
     @DeleteMapping("/wishes")
     public void deleteProductInWishList(
         @RequestBody WishRequestDto wishRequestDto,
-        @LoginUser LoginUserDto loginUserDto) {
+        @LoginMember LoginMemberDto loginMemberDto) {
         Wish wish = wishRequestDto.toEntity();
-        wish.setUserId(loginUserDto.getId());
+        wish.setMemberId(loginMemberDto.getId());
         wishDao.deleteWish(wish);
     }
 }

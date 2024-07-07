@@ -1,13 +1,13 @@
 package gift.model.dto;
 
-public class LoginUserDto {
+public class LoginMemberDto {
 
     Long id;
     String name;
     String email;
     String role;
 
-    public LoginUserDto(Long id, String name, String email, String role) {
+    public LoginMemberDto(Long id, String name, String email, String role) {
         this.id = id;
         this.name = name;
         this.email = email;

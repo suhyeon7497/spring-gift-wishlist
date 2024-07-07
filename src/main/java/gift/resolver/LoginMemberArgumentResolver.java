@@ -1,9 +1,9 @@
 package gift.resolver;
 
-import gift.model.User;
-import gift.model.dto.LoginUserDto;
-import gift.repository.UserDao;
-import gift.resolver.annotation.LoginUser;
+import gift.model.Member;
+import gift.model.dto.LoginMemberDto;
+import gift.repository.MemberDao;
+import gift.resolver.annotation.LoginMember;
 import gift.service.AuthService;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -13,19 +13,19 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
+public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final UserDao userDao;
+    private final MemberDao memberDao;
     private final AuthService authService;
 
-    public LoginUserArgumentResolver(UserDao userDao, AuthService authService) {
-        this.userDao = userDao;
+    public LoginMemberArgumentResolver(MemberDao memberDao, AuthService authService) {
+        this.memberDao = memberDao;
         this.authService = authService;
     }
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterAnnotation(LoginUser.class) != null;
+        return parameter.getParameterAnnotation(LoginMember.class) != null;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String token = authService.extractToken(webRequest.getHeader("Authorization"));
         Long id = Long.parseLong(authService.getClaims(token).getSubject());
-        User user = userDao.selectUserById(id);
-        return new LoginUserDto(user.getId(), user.getName(), user.getEmail(), user.getRole());
+        Member member = memberDao.selectMemberById(id);
+        return new LoginMemberDto(member.getId(), member.getName(), member.getEmail(), member.getRole());
     }
 }

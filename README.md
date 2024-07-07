@@ -19,12 +19,12 @@
 - (선택) 회원을 조회, 추가, 수정, 삭제할 수 있는 관리자 화면을 구현한다.
 
 #### TodoList
-- [x] User Table 생성
-- [x] User Class 생성
-- [x] UserRequestDto 생성
+- [x] Member Table 생성
+- [x] Member Class 생성
+- [x] MemberRequestDto 생성
 - [x] TokenResponseDto 생성
-- [x] UserDao 생성
-- [x] UserController 생성
+- [x] MemberDao 생성
+- [x] MemberController 생성
 - [x] AuthService 생성
   - [x] Token validate
 - [x] AuthInterceptor 생성
@@ -38,9 +38,9 @@
 - 위시 리스트에 담긴 상품을 삭제할 수 있다.
 
 #### TodoList
-- [x] LoginUserArgumentResolver 작성
-- [x] LoginUser annotation 작성
-- [x] LoginUser class 작성
+- [x] LoginMemberArgumentResolver 작성
+- [x] LoginMember annotation 작성
+- [x] LoginMember class 작성
 - [x] WebConfig에 추가
 - [x] WishRequest 작성
 - [x] WishResponse 작성

@@ -1,10 +1,10 @@
 package gift.service;
 
-import gift.exception.UserErrorCode;
-import gift.exception.UserException;
-import gift.model.User;
-import gift.model.dto.UserRequestDto;
-import gift.repository.UserDao;
+import gift.exception.MemberErrorCode;
+import gift.exception.MemberException;
+import gift.model.Member;
+import gift.model.dto.MemberRequestDto;
+import gift.repository.MemberDao;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -17,29 +17,29 @@ public class AuthService {
     private static final String secretKey = "Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=";
     private int accessTokenExpMinutes = 5;
 
-    private final UserDao userDao;
+    private final MemberDao memberDao;
 
-    public AuthService(UserDao userDao) {
-        this.userDao = userDao;
+    public AuthService(MemberDao memberDao) {
+        this.memberDao = memberDao;
     }
 
-    public String getToken(UserRequestDto userRequestDto) throws UserException {
-        User user = userDao.selectUserByEmail(userRequestDto.getEmail());
-        if (!matchPassword(userRequestDto.getPassword(), user.getPassword())) {
-            throw new UserException(UserErrorCode.FAILURE_LOGIN);
+    public String getToken(MemberRequestDto memberRequestDto) throws MemberException {
+        Member member = memberDao.selectMemberByEmail(memberRequestDto.getEmail());
+        if (!matchPassword(memberRequestDto.getPassword(), member.getPassword())) {
+            throw new MemberException(MemberErrorCode.FAILURE_LOGIN);
         }
-        return generateToken(user);
+        return generateToken(member);
     }
 
-    private boolean matchPassword(String userRequestPassword, String userPassword) {
-        return userRequestPassword.equals(userPassword);
+    private boolean matchPassword(String memberRequestPassword, String memberPassword) {
+        return memberRequestPassword.equals(memberPassword);
     }
 
-    private String generateToken(User user) {
+    private String generateToken(Member member) {
         return Jwts.builder()
-            .claim("name", user.getName())
-            .claim("role", user.getRole())
-            .subject(user.getId().toString())
+            .claim("name", member.getName())
+            .claim("role", member.getRole())
+            .subject(member.getId().toString())
             .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
             .compact();
     }
@@ -57,7 +57,7 @@ public class AuthService {
     private boolean validateToken(String token) {
         try {
             Claims payload = getClaims(token);
-            User user = userDao.selectUserById(Long.parseLong(payload.getSubject()));
+            Member member = memberDao.selectMemberById(Long.parseLong(payload.getSubject()));
             return true;
         } catch (Exception e) {
             return false;

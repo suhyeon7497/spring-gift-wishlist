@@ -9,9 +9,9 @@ CREATE TABLE products(
             );
 
 
-DROP TABLE users IF EXISTS;
+DROP TABLE members IF EXISTS;
 
-CREATE TABLE users(
+CREATE TABLE members(
                 id BIGINT AUTO_INCREMENT,
                 email VARCHAR(255),
                 password VARCHAR(255),
@@ -26,5 +26,5 @@ DROP TABLE wishes IF EXISTS;
 CREATE TABLE wishes(
                 product_name VARCHAR(255),
                 count VARCHAR(255),
-                user_id INT
+                member_id INT
             );

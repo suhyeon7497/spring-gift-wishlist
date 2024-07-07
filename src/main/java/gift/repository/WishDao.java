@@ -14,30 +14,30 @@ public class WishDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Wish> selectAllWishesByUserId(Long userId) {
+    public List<Wish> selectAllWishesByMemberId(Long memberId) {
         return jdbcTemplate.query(
-            WishQuery.SELECT_ALL_WISHES_BY_USERID.getQuery(),
+            WishQuery.SELECT_ALL_WISHES_BY_MEMBERID.getQuery(),
             (resultSet, rowNum) -> new Wish(
-                resultSet.getLong("user_id"),
+                resultSet.getLong("member_id"),
                 resultSet.getString("product_name"),
                 resultSet.getInt("count")
             ),
-            userId
+            memberId
         );
     }
 
     public void insertWish(Wish wish) {
-        jdbcTemplate.update(WishQuery.INSERT_WISH_BY_USERID.getQuery(), wish.getProductName(),
-            wish.getCount(), wish.getUserId());
+        jdbcTemplate.update(WishQuery.INSERT_WISH_BY_MEMBERID.getQuery(), wish.getProductName(),
+            wish.getCount(), wish.getMemberId());
     }
 
     public void updateWish(Wish wish) {
-        jdbcTemplate.update(WishQuery.UPDATE_WISH_BY_USERID_PRODUCTNAME.getQuery(), wish.getCount(),
-            wish.getUserId(), wish.getProductName());
+        jdbcTemplate.update(WishQuery.UPDATE_WISH_BY_MEMBERID_PRODUCTNAME.getQuery(), wish.getCount(),
+            wish.getMemberId(), wish.getProductName());
     }
 
     public void deleteWish(Wish wish) {
-        jdbcTemplate.update(WishQuery.DELETE_WISH_BY_USERID_PRODUCTNAME.getQuery(),
-            wish.getUserId(), wish.getProductName());
+        jdbcTemplate.update(WishQuery.DELETE_WISH_BY_MEMBERID_PRODUCTNAME.getQuery(),
+            wish.getMemberId(), wish.getProductName());
     }
 }

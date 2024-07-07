@@ -1,26 +1,26 @@
 package gift.repository;
 
-import gift.exception.UserErrorCode;
-import gift.exception.UserException;
-import gift.model.User;
+import gift.exception.MemberErrorCode;
+import gift.exception.MemberException;
+import gift.model.Member;
 import java.util.List;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDao {
+public class MemberDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public UserDao(JdbcTemplate jdbcTemplate) {
+    public MemberDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<User> selectAllUsers() {
+    public List<Member> selectAllMembers() {
         return jdbcTemplate.query(
-            UserQuery.SELECT_ALL_USER.getQuery(),
-            (resultSet, rowNum) -> new User(
+            MemberQuery.SELECT_ALL_MEMBER.getQuery(),
+            (resultSet, rowNum) -> new Member(
                 resultSet.getLong("id"),
                 resultSet.getString("email"),
                 resultSet.getString("password"),
@@ -30,11 +30,11 @@ public class UserDao {
         );
     }
 
-    public User selectUserByEmail(String email) throws UserException {
+    public Member selectMemberByEmail(String email) throws MemberException {
         try {
             return jdbcTemplate.queryForObject(
-                UserQuery.SELECT_USER_BY_EMAIL.getQuery(),
-                (resultSet, rowNum) -> new User(
+                MemberQuery.SELECT_MEMBER_BY_EMAIL.getQuery(),
+                (resultSet, rowNum) -> new Member(
                     resultSet.getLong("id"),
                     resultSet.getString("email"),
                     resultSet.getString("password"),
@@ -44,14 +44,14 @@ public class UserDao {
                 email
             );
         } catch (EmptyResultDataAccessException e) {
-            throw new UserException(UserErrorCode.FAILURE_LOGIN);
+            throw new MemberException(MemberErrorCode.FAILURE_LOGIN);
         }
     }
 
-    public User selectUserById(Long id) throws EmptyResultDataAccessException {
+    public Member selectMemberById(Long id) throws EmptyResultDataAccessException {
         return jdbcTemplate.queryForObject(
-            UserQuery.SELECT_USER_BY_ID.getQuery(),
-            (resultSet, rowNum) -> new User(
+            MemberQuery.SELECT_MEMBER_BY_ID.getQuery(),
+            (resultSet, rowNum) -> new Member(
                 resultSet.getLong("id"),
                 resultSet.getString("email"),
                 resultSet.getString("password"),
@@ -62,17 +62,17 @@ public class UserDao {
         );
     }
 
-    public void insertUser(User user) {
-        jdbcTemplate.update(UserQuery.INSERT_USER.getQuery(), user.getEmail(), user.getPassword(),
-            user.getName(), user.getRole());
+    public void insertMember(Member member) {
+        jdbcTemplate.update(MemberQuery.INSERT_MEMBER.getQuery(), member.getEmail(), member.getPassword(),
+            member.getName(), member.getRole());
     }
 
-    public void updateUserByEmail(String email, User user) {
-        jdbcTemplate.update(UserQuery.UPDATE_USER_BY_EMAIL.getQuery(), user.getEmail(),
-            user.getPassword(), user.getName(), user.getRole(), email);
+    public void updateMemberByEmail(String email, Member member) {
+        jdbcTemplate.update(MemberQuery.UPDATE_MEMBER_BY_EMAIL.getQuery(), member.getEmail(),
+            member.getPassword(), member.getName(), member.getRole(), email);
     }
 
-    public void deleteUserByEmail(String email) {
-        jdbcTemplate.update(UserQuery.DELETE_USER_BY_EMAIL.getQuery(), email);
+    public void deleteMemberByEmail(String email) {
+        jdbcTemplate.update(MemberQuery.DELETE_MEMBER_BY_EMAIL.getQuery(), email);
     }
 }

@@ -21,9 +21,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(productException.getMessage());
     }
 
-    @ExceptionHandler(UserException.class)
-    public ResponseEntity<String> handleUserException(UserException userException) {
-        return ResponseEntity.status(userException.getUserErrorCode().getHttpStatus())
-            .body(userException.getMessage());
+    @ExceptionHandler(MemberException.class)
+    public ResponseEntity<String> handleMemberException(MemberException memberException) {
+        return ResponseEntity.status(memberException.getMemberErrorCode().getHttpStatus())
+            .body(memberException.getMessage());
     }
 }
