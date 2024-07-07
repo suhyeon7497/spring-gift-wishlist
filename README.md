@@ -21,7 +21,7 @@
 #### TodoList
 - [x] Member Table 생성
 - [x] Member Class 생성
-- [x] MemberRequestDto 생성
+- [x] TokenRequestDto 생성
 - [x] TokenResponseDto 생성
 - [x] MemberDao 생성
 - [x] MemberController 생성

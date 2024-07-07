@@ -4,7 +4,7 @@ import gift.model.Member;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public class MemberRequestDto {
+public class TokenRequestDto {
 
     @Email
     private String email;
@@ -16,10 +16,10 @@ public class MemberRequestDto {
 
     private String role;
 
-    public MemberRequestDto() {
+    public TokenRequestDto() {
     }
 
-    public MemberRequestDto(String email, String password, String name, String role) {
+    public TokenRequestDto(String email, String password, String name, String role) {
         this.email = email;
         this.password = password;
         this.name = name;

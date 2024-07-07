@@ -1,6 +1,6 @@
 package gift.controller;
 
-import gift.model.dto.MemberRequestDto;
+import gift.model.dto.TokenRequestDto;
 import gift.model.dto.TokenResponseDto;
 import gift.repository.MemberDao;
 import gift.service.AuthService;
@@ -24,16 +24,16 @@ public class MemberController {
 
     @PostMapping("/register")
     public TokenResponseDto register(
-        @Valid @RequestBody MemberRequestDto memberRequestDto) {
-        memberDao.insertMember(memberRequestDto.toEntity());
+        @Valid @RequestBody TokenRequestDto tokenRequestDto) {
+        memberDao.insertMember(tokenRequestDto.toEntity());
         return new TokenResponseDto(
-            authService.getToken(memberRequestDto));
+            authService.getToken(tokenRequestDto));
     }
 
     @PostMapping("/login")
     public TokenResponseDto login(
-        @Valid @RequestBody MemberRequestDto memberRequestDto) {
+        @Valid @RequestBody TokenRequestDto tokenRequestDto) {
         return new TokenResponseDto(
-            authService.getToken(memberRequestDto));
+            authService.getToken(tokenRequestDto));
     }
 }
