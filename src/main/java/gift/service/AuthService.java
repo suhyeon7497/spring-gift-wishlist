@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
-    private static final String secretKey = "Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=";
+    private static final String SECRET_KEY = "Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=";
 
     private final MemberDao memberDao;
 
@@ -40,7 +40,7 @@ public class AuthService {
             .claim("name", member.getName())
             .claim("role", member.getRole())
             .subject(member.getId().toString())
-            .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
+            .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
             .compact();
     }
 
@@ -64,7 +64,7 @@ public class AuthService {
     }
 
     public Claims getClaims(String token) throws JwtException {
-        Jws<Claims> jws = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
+        Jws<Claims> jws = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
             .build()
             .parseSignedClaims(token);
         return jws.getPayload();
