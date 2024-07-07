@@ -25,14 +25,10 @@ public class AuthService {
 
     public String getToken(MemberRequestDto memberRequestDto) throws MemberException {
         Member member = memberDao.selectMemberByEmail(memberRequestDto.getEmail());
-        if (!matchPassword(memberRequestDto.getPassword(), member.getPassword())) {
+        if (!member.matchPassword(memberRequestDto.getPassword())) {
             throw new MemberException(MemberErrorCode.FAILURE_LOGIN);
         }
         return generateToken(member);
-    }
-
-    private boolean matchPassword(String memberRequestPassword, String memberPassword) {
-        return memberRequestPassword.equals(memberPassword);
     }
 
     private String generateToken(Member member) {

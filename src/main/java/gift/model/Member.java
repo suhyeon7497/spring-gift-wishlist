@@ -42,4 +42,8 @@ public class Member {
     public String getRole() {
         return role;
     }
+
+    public boolean matchPassword(String password) {
+        return this.password.equals(password);
+    }
 }
