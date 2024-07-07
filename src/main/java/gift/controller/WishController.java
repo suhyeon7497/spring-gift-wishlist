@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/wishes")
 public class WishController {
 
     private final WishDao wishDao;
@@ -23,7 +25,7 @@ public class WishController {
         this.wishDao = wishDao;
     }
 
-    @GetMapping("/wishes")
+    @GetMapping
     public List<WishResponseDto> getWishList(@LoginMember LoginMemberDto loginMemberDto) {
         return wishDao.selectAllWishesByMemberId(loginMemberDto.getId())
             .stream()
@@ -31,7 +33,7 @@ public class WishController {
             .toList();
     }
 
-    @PostMapping("/wishes")
+    @PostMapping
     public void addProductToWishList(@RequestBody WishRequestDto wishRequestDto,
         @LoginMember LoginMemberDto loginMemberDto) {
         Wish wish = wishRequestDto.toEntity();
@@ -39,7 +41,7 @@ public class WishController {
         wishDao.insertWish(wish);
     }
 
-    @PutMapping("/wishes")
+    @PutMapping
     public void updateProductInWishList(@RequestBody WishRequestDto wishRequestDto,
         @LoginMember LoginMemberDto loginMemberDto) {
         Wish wish = wishRequestDto.toEntity();
@@ -51,7 +53,7 @@ public class WishController {
         wishDao.updateWish(wish);
     }
 
-    @DeleteMapping("/wishes")
+    @DeleteMapping
     public void deleteProductInWishList(
         @RequestBody WishRequestDto wishRequestDto,
         @LoginMember LoginMemberDto loginMemberDto) {

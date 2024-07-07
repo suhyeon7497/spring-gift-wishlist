@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin/list")
+@RequestMapping("/admin/products")
 public class AdminController {
 
     private final ProductDao productDao;
@@ -33,7 +33,7 @@ public class AdminController {
             .map(ProductResponseDto::from)
             .toList();
         model.addAttribute("productList", productList);
-        return "list";
+        return "products";
     }
 
     @GetMapping("/add")
@@ -49,7 +49,7 @@ public class AdminController {
             return "add-product-form";
         }
         productDao.insertProduct(productRequestDto.toEntity());
-        return "redirect:/admin/list";
+        return "redirect:/admin/products";
     }
 
     @GetMapping("/edit/{id}")
@@ -67,13 +67,13 @@ public class AdminController {
             return "modify-product-form";
         }
         productDao.updateProductById(id, productRequestDto.toEntity());
-        return "redirect:/admin/list";
+        return "redirect:/admin/products";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id) {
         productDao.deleteProductById(id);
-        return "redirect:/admin/list";
+        return "redirect:/admin/products";
     }
 
     @ExceptionHandler(ProductException.class)
