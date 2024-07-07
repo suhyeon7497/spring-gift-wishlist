@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private static final String secretKey = "Yn2kjibddFAWtnPJ2AFlL8WXmohJMCvigQggaEypa5E=";
-    private int accessTokenExpMinutes = 5;
 
     private final MemberDao memberDao;
 
